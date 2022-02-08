@@ -19,7 +19,7 @@
     </tr>
     <c:forEach var="mealTo" items="${mealToList}">
         <tr class=${mealTo.excess == 'true'? 'red' : 'green'}>
-            <td><c:out value="${f:formatLocalDateTime(mealTo.dateTime, 'yyy-MM-dd HH:mm')}"/></td>
+            <td><c:out value="${f:formatLocalDateTime(mealTo.dateTime, 'yyyy-MM-dd HH:mm')}"/></td>
             <td><c:out value="${mealTo.description}"/></td>
             <td><c:out value="${mealTo.calories}"/></td>
         </tr>
