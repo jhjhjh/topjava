@@ -7,10 +7,7 @@ import ru.javawebinar.topjava.model.AbstractNamedEntity;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -18,7 +15,7 @@ import java.util.stream.Collectors;
 @Repository
 public class InMemoryUserRepository implements UserRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepository.class);
-    private final Map<Integer,User> repository = new ConcurrentHashMap<>();
+    private final Map<Integer, User> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger();
 
     @Override
@@ -48,10 +45,13 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public User getByEmail(String email) {
-        List<User> userList = repository.values().stream().filter(user -> user.getEmail().compareTo(email) == 0).collect(Collectors.toList());
+        List<User> userList = repository.values().stream()
+                .filter(user -> user.getEmail().toLowerCase(Locale.ROOT).compareTo(email.toLowerCase(Locale.ROOT)) == 0).collect(Collectors.toList());
         switch (userList.size()) {
-            case 0: return null;
-            case 1: return userList.get(0);
+            case 0:
+                return null;
+            case 1:
+                return userList.get(0);
             default: {
                 log.info("getByEmail {}", email);
                 throw new RuntimeException("Multiple emails. Email must be unique");
