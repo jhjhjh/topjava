@@ -5,4 +5,6 @@ target
 log
 *.patch
 .attach_pid*
+*.mp4
+.gitignore
 
